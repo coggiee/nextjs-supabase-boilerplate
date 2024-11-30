@@ -1,7 +1,7 @@
 
 # NextJS 15 App Router Boilerplate
 ## Description
-In this boilerplate, we use ...
+This boilerplate use...
 
 - User auth and session management using [Auth.js (next-auth@beta)](https://authjs.dev/)
 - Database using [Supabase](https://supabase.com/)
