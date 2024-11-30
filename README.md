@@ -37,7 +37,7 @@ In this boilerplate, we use ...
 ```md
 # If you use Next Auth (Auth.js)
 AUTH_SECRET="Your auth secret" # Added by `npx auth secret`. Read more: https://cli.authjs.dev
-
+AUTH_URL="Your auth url"
 # If you use Next Auth Provider Google, Github Sample
 AUTH_GOOGLE_ID="Your Google Client ID"
 AUTH_GOOGLE_SECRET="Your Google Client Secret"
