@@ -23,6 +23,8 @@ This boilerplate use...
 │   └── fonts
 ├── components
 ├── hooks
+│   └── mutate
+│   └── query
 ├── lib
 │   └── prisma-client.ts
 ├── prisma
@@ -32,6 +34,12 @@ This boilerplate use...
 ├── middleware.ts
 └── auth.ts
 ```
+- `api`: for route handler in nextjs
+- `components`: for common or route-specific components
+- `hooks`: for custom hook, mutate hook, query hook
+- `lib`: for reusable function
+- `types`: for commont types
+- `middleware.ts, auth.ts`: required for next-auth(if you don't use next-auth, you can modify middleware.ts and remove auth.ts)
 
 ## Environment Variables
 ```md
