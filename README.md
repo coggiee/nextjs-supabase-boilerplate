@@ -55,6 +55,28 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY="Your Supabase Anon Key"
 NEXT_PUBLIC_SUPABASE_JWT_SECRET="Your Supabase JWT Secret"
 ```
 
+## Installation
+1. Clone this repo
+2. Create your own `.env` file be referring to `.env.sample`
+3. Run the command below
+```bash
+pnpm install
+```
+### ⛔️ An error may occur...
+```
+Error: 
+You don't have any models defined in your schema.prisma, so nothing will be generated.
+You can define a model like this:
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}
+```
+After Step 3, the above error may occur. This is caused by the `postinstall` script because there is no table in the schema of your currently connected supabase. 
+If you create a table, this error will not occur.
+
 ## Additional Notes
 If you don't use **Auth.js(next-auth)**, you can delete below files
 - `app/api/auth/[...nextauth]/route.ts` (or delete api folder)
