@@ -82,8 +82,11 @@ model User {
   name  String?
 }
 ```
-After Step 3, the above error may occur. This is caused by the `postinstall` script because there is no table in the schema of your currently connected supabase. 
-If you create a table, this error will not occur.
+After Step 3, the above error may occur. 
+This is caused by the `postinstall` script because there is no table in the schema of your currently connected supabase. 
+But it's **not a critical error** and doesn't affect the project
+**If you create a table, this error will not occur.**
+
 
 ## Additional Notes
 If you don't use **Auth.js(next-auth)**, you can delete below files
