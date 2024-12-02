@@ -32,14 +32,6 @@ export const CustomImage: React.FC<CustomImageProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // const getImagePath = (path: string) => {
-  //   if (process.env.NODE_ENV === 'development') {
-  //     return path; // 로컬 환경에서는 그대로 사용
-  //   }
-  //   // 배포 환경에서는 '/public'을 제거한 경로 사용
-  //   return path.replace('./public', '');
-  // };
-  
   useEffect(() => {
     const fetchImage = async () => {
       try {
