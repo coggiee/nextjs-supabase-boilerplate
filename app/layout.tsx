@@ -23,9 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${pretendard.variable} font-pretendard bg-mainbackground antialiased`}
+        className={`${pretendard.variable} bg-mainbackground font-pretendard antialiased`}
       >
         <main className="container mx-auto h-dvh w-full px-6">{children}</main>
+        <script defer src="/service-worker.js" />
       </body>
     </html>
   );
