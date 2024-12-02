@@ -80,35 +80,30 @@ export async function GET(request: NextRequest) {
   const height = parseInt(searchParams.get("height") || "200", 10);
   const quality = parseInt(searchParams.get("quality") || "80", 10);
 
-  // 폴더 해시 및 파일 해시 생성
   const folderHash = generateImageFolderHash(rawImagePath);
   const fileHash = generateImageFileHash(rawImagePath, width, height, quality);
 
   const imageFolderPath = path.join(CACHE_DIR, folderHash);
   const cachedImagePath = path.join(imageFolderPath, `${fileHash}.webp`);
 
-  // 캐시 디렉토리 생성
   await ensureCacheDir(imageFolderPath);
 
   try {
     let isCached = true;
 
     try {
-      // 파일이 이미 존재하는지 확인
       await fs.access(cachedImagePath);
     } catch {
       isCached = false;
     }
 
     if (!isCached) {
-      // 기존 폴더의 모든 파일 삭제
       await deleteExistingFiles(imageFolderPath);
 
       if (
         rawImagePath.startsWith("http://") ||
         rawImagePath.startsWith("https://")
       ) {
-        // 외부 이미지 처리
         await downloadAndProcessImage(
           rawImagePath,
           cachedImagePath,
@@ -117,7 +112,6 @@ export async function GET(request: NextRequest) {
           quality,
         );
       } else {
-        // 로컬 파일 처리
         const localImagePath = path.join(
           process.cwd(),
           rawImagePath.replace(/^\.\//, ""),
@@ -129,7 +123,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // 캐시된 이미지 반환
     const imageBuffer = await fs.readFile(cachedImagePath);
     return new NextResponse(imageBuffer, {
       status: 200,
@@ -138,10 +131,15 @@ export async function GET(request: NextRequest) {
         "Cache-Control": "public, max-age=3600, immutable",
         "Last-Modified": new Date().toUTCString(),
         ETag: `"${fileHash}"`,
+        Vary: "Accept",
       },
     });
   } catch (error) {
     console.error("Image processing error:", error);
-    return NextResponse.json({ status: 500 });
+    return NextResponse.json(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { error: "Image processing failed", details: (error as any).message },
+      { status: 500 },
+    );
   }
 }
