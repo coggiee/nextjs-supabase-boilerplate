@@ -1,4 +1,4 @@
-import path from "path";
+// import path from "path";
 import crypto from "crypto";
 
 import sharp from "sharp";
@@ -61,11 +61,11 @@ export async function GET(request: NextRequest) {
       );
     } else {
       // 로컬 파일 처리
-      const localImagePath = path.join(
-        process.cwd(),
-        rawImagePath.replace(/^\.\//, ""),
-      );
-      imageBuffer = await sharp(localImagePath)
+      // const localImagePath = path.join(
+      //   process.cwd(),
+      //   rawImagePath.replace(/^\.\//, ""),
+      // );
+      imageBuffer = await sharp(rawImagePath)
         .resize({ width, height, fit: "cover" })
         .webp({ quality })
         .toBuffer();

@@ -32,18 +32,26 @@ export const CustomImage: React.FC<CustomImageProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  // const getImagePath = (path: string) => {
+  //   if (process.env.NODE_ENV === 'development') {
+  //     return path; // 로컬 환경에서는 그대로 사용
+  //   }
+  //   // 배포 환경에서는 '/public'을 제거한 경로 사용
+  //   return path.replace('./public', '');
+  // };
+  
   useEffect(() => {
     const fetchImage = async () => {
       try {
         setIsLoading(true);
         setError(false);
 
-        // const normalizedSrc = src.startsWith("./")
-        //   ? src.replace("./", "/")
-        //   : src;
+        const normalizedSrc = src.startsWith("./")
+          ? src.replace("./", "/")
+          : src;
 
         const response = await fetch(
-          `/api/image?image=${encodeURIComponent(src)}&width=${width}&height=${height}&quality=${quality}`,
+          `/api/image?image=${encodeURIComponent(normalizedSrc)}&width=${width}&height=${height}&quality=${quality}`,
         ); // 이미지 API로 요청
         if (!response.ok) {
           setError(true);

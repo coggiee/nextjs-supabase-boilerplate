@@ -46,6 +46,14 @@ export default function Page() {
         quality={100}
         className="rounded-lg"
       />
+      <CustomImage
+        src={"https://picsum.photos/400"}
+        alt="Test Image"
+        width={400}
+        height={400}
+        quality={100}
+        className="rounded-lg"
+      />
       <Button onClick={handleToggle}>Toggle Image</Button>
     </div>
   );
