@@ -8,7 +8,6 @@ import { CustomImage } from "@/components/custom-image";
 
 import TestPng from "../../public/landing-object.webp";
 
-
 export default function Page() {
   const [url, setUrl] = useState("./public/landing-object.webp");
 
@@ -33,6 +32,14 @@ export default function Page() {
       </aside>
       <CustomImage
         src={url}
+        alt="Test Image"
+        width={400}
+        height={400}
+        quality={100}
+        className="rounded-lg"
+      />
+      <CustomImage
+        src={"./public/test.png"}
         alt="Test Image"
         width={400}
         height={400}
