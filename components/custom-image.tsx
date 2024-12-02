@@ -51,16 +51,16 @@ export const CustomImage: React.FC<CustomImageProps> = ({
         }
 
         const imageBlob = await response.blob();
-      const objectURL = URL.createObjectURL(imageBlob);
-      setImageSrc(objectURL);  // imageSrc를 설정한 뒤
+        const objectURL = URL.createObjectURL(imageBlob);
+        setImageSrc(objectURL); // imageSrc를 설정한 뒤
 
-      const preloadImage = new Image();
-      preloadImage.src = objectURL; // 여기서 objectURL을 사용
-      preloadImage.onload = () => setIsLoading(false);
-      preloadImage.onerror = () => {
-        setError(true);
-        setIsLoading(false);
-      };
+        const preloadImage = new Image();
+        preloadImage.src = objectURL; // 여기서 objectURL을 사용
+        preloadImage.onload = () => setIsLoading(false);
+        preloadImage.onerror = () => {
+          setError(true);
+          setIsLoading(false);
+        };
       } catch (err) {
         console.error("Error while fetching image:", err);
         setError(true);
