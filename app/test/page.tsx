@@ -39,7 +39,7 @@ export default function Page() {
         className="rounded-lg"
       />
       <CustomImage
-        src={"./public/test.png"}
+        src="landing-object.webp"
         alt="Test Image"
         width={400}
         height={400}
