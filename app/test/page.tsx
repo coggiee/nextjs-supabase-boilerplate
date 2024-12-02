@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
+import { Button } from "@/components/ui/button";
 import { CustomImage } from "@/components/custom-image";
 
 import TestPng from "../../public/landing-object.webp";
-import { Button } from "@/components/ui/button";
+
 
 export default function Page() {
   const [url, setUrl] = useState("./public/landing-object.webp");
