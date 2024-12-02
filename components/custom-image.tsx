@@ -38,12 +38,12 @@ export const CustomImage: React.FC<CustomImageProps> = ({
         setIsLoading(true);
         setError(false);
 
-        const normalizedSrc = src.startsWith("./")
-          ? src.replace("./", "/")
-          : src;
+        // const normalizedSrc = src.startsWith("./")
+        //   ? src.replace("./", "/")
+        //   : src;
 
         const response = await fetch(
-          `/api/image?image=${encodeURIComponent(normalizedSrc)}&width=${width}&height=${height}&quality=${quality}`,
+          `/api/image?image=${encodeURIComponent(src)}&width=${width}&height=${height}&quality=${quality}`,
         ); // 이미지 API로 요청
         if (!response.ok) {
           setError(true);

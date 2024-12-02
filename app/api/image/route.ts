@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from "path";
 import crypto from "crypto";
 
@@ -35,20 +34,11 @@ const downloadAndProcessImage = async (
     .toBuffer(); // 파일 시스템에 저장하지 않고, 메모리에서 Buffer로 반환
 };
 
-// 이미지 경로 조정 함수
-const getImagePath = (rawImagePath: string) => {
-  if (process.env.NODE_ENV === "development") {
-    return rawImagePath; // 로컬 환경에서는 그대로 사용
-  }
-  return rawImagePath.replace("./public", ""); // 배포 환경에서는 '/public'을 제거
-};
-
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
-  const rawImagePath = getImagePath(
-    searchParams.get("image") || "./public/landing-object.webp",
-  );
+  const rawImagePath =
+    searchParams.get("image") || "./public/landing-object.webp";
   const width = parseInt(searchParams.get("width") || "200", 10);
   const height = parseInt(searchParams.get("height") || "200", 10);
   const quality = parseInt(searchParams.get("quality") || "80", 10);
@@ -94,6 +84,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Image processing error:", error);
     return NextResponse.json(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { error: "Image processing failed", details: (error as any).message },
       { status: 500 },
     );
