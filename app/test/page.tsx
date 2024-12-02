@@ -18,7 +18,7 @@ export default function Page() {
         />
       </aside>
       <CustomImage
-        src={"./public/spotify-logo.webp"}
+        src={"/spotify-logo.webp"}
         alt="Test Image"
         width={400}
         height={400}
