@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { CustomImage } from "@/components/custom-image";
 
-import TestPng from "../../public/test.png";
+import TestPng from "../../public/landing-object.webp";
 
 export default function Page() {
   return (
@@ -18,11 +18,12 @@ export default function Page() {
         />
       </aside>
       <CustomImage
-        src={"/spotify-logo.webp"}
+        src={"https://picsum.photos/200"}
         alt="Test Image"
         width={400}
         height={400}
         quality={100}
+        className="rounded-lg"
       />
     </div>
   );

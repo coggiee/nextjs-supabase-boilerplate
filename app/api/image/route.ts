@@ -74,7 +74,8 @@ const downloadAndProcessImage = async (
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
-  const rawImagePath = searchParams.get("image") || "./public/test.png";
+  const rawImagePath =
+    searchParams.get("image") || "./public/landing-object.webp";
   const width = parseInt(searchParams.get("width") || "200", 10);
   const height = parseInt(searchParams.get("height") || "200", 10);
   const quality = parseInt(searchParams.get("quality") || "80", 10);
@@ -134,7 +135,9 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         "Content-Type": "image/webp",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "public, max-age=3600, immutable",
+        "Last-Modified": new Date().toUTCString(),
+        ETag: `"${fileHash}"`,
       },
     });
   } catch (error) {
