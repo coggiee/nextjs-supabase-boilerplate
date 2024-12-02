@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -15,7 +17,7 @@ export default function Home() {
           <Button
             asChild
             variant="ghost"
-            className="border-spotify hover:bg-spotify shadow-spotify rounded-full border"
+            className="rounded-full border border-spotify shadow-spotify hover:bg-spotify"
           >
             <Link href="/home">둘러보기</Link>
           </Button>

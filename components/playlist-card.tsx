@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -9,6 +8,7 @@ import { MusicProvider } from "@/types/music-provider.types";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Badge } from "./ui/badge";
 import IconMusic from "./icon/icon-music";
+import { CustomImage } from "./custom-image";
 
 interface PlaylistCardProps {
   provider: MusicProvider;
@@ -42,7 +42,7 @@ export default function PlaylistCard({ provider }: PlaylistCardProps) {
       </CardHeader>
       <CardContent className="flex gap-4 px-4 text-white">
         <aside className="relative aspect-square w-16 overflow-hidden rounded-lg">
-          <Image
+          <CustomImage
             src={"https://picsum.photos/200"}
             alt="playlist-image"
             width={200}
@@ -59,7 +59,7 @@ export default function PlaylistCard({ provider }: PlaylistCardProps) {
             {["코딩할 때 듣는", "눈물 나는", "잔잔한"].map((tag, index) => (
               <Badge
                 key={index}
-                className="border-stroke bg-subbackground rounded-full"
+                className="rounded-full border-stroke bg-subbackground"
               >
                 #{tag}
               </Badge>
@@ -67,7 +67,7 @@ export default function PlaylistCard({ provider }: PlaylistCardProps) {
           </footer>
         </aside>
       </CardContent>
-      <CardFooter className="text-subtle justify-between px-4 pb-3">
+      <CardFooter className="justify-between px-4 pb-3 text-subtle">
         <h1 className="text-lg font-semibold">+87곡</h1>
         <h2 className="text-sm">by John doe</h2>
       </CardFooter>

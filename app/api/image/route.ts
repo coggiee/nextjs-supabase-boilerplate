@@ -72,10 +72,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         "Content-Type": "image/webp",
-        "Cache-Control": "public, max-age=3600, immutable",
-        "Last-Modified": new Date().toUTCString(),
         ETag: `"${fileHash}"`,
-        Vary: "Accept",
       },
     });
   } catch (error) {
