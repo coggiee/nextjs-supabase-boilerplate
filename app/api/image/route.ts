@@ -1,5 +1,4 @@
 import path from "path";
-import fs from "fs/promises";
 import crypto from "crypto";
 
 import sharp from "sharp";
