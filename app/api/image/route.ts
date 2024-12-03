@@ -2,7 +2,6 @@ import path from "path";
 import crypto from "crypto";
 
 import sharp from "sharp";
-import fetch from "node-fetch";
 import { NextRequest, NextResponse } from "next/server";
 
 // 파일 이름 해시 생성 (요청 파라미터 포함)
@@ -24,11 +23,14 @@ const downloadAndProcessImage = async (
   quality: number,
 ) => {
   const response = await fetch(imageUrl);
+
   if (!response.ok)
     throw new Error(`Failed to fetch image: ${response.statusText}`);
 
-  const buffer = await response.buffer();
-  return await sharp(buffer)
+  const buffer = await response.arrayBuffer(); // arrayBuffer() 사용
+  const imageBuffer = Buffer.from(buffer); // Buffer로 변환
+
+  return await sharp(imageBuffer)
     .resize({ width, height, fit: "cover" })
     .webp({ quality })
     .toBuffer(); // 파일 시스템에 저장하지 않고, 메모리에서 Buffer로 반환
