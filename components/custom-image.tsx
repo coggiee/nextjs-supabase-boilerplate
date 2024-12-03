@@ -14,6 +14,7 @@ interface CustomImageProps {
   priority?: boolean;
   placeholder?: "blur" | "empty";
   blurDataURL?: string;
+  unOptimizeExternalImage?: boolean;
 }
 
 export const CustomImage: React.FC<CustomImageProps> = ({
@@ -27,60 +28,88 @@ export const CustomImage: React.FC<CustomImageProps> = ({
   priority = false,
   placeholder = "empty",
   blurDataURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO0OgMAAUYBCAZFUJ4AAAAASUVORK5CYII=",
+  unOptimizeExternalImage = false,
 }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        setIsLoading(true);
-        setError(false);
+    // 이미지 사전 로딩 로직을 분리한 함수
+    const handleImagePreloading = (imageSrc: string) => {
+      setIsLoading(true);
+      setError(false);
 
+      const preloadImage = new Image();
+      preloadImage.src = imageSrc;
+
+      preloadImage.onload = () => {
+        setImageSrc(imageSrc);
+        setIsLoading(false);
+      };
+
+      preloadImage.onerror = () => {
+        setError(true);
+        setIsLoading(false);
+      };
+    };
+
+    // 이미지 최적화 API 요청 함수
+    const fetchOptimizedImage = async () => {
+      try {
         const normalizedSrc = src.startsWith("./")
           ? src.replace("./", "/")
           : src;
 
         const response = await fetch(
           `/api/image?image=${encodeURIComponent(normalizedSrc)}&width=${width}&height=${height}&quality=${quality}`,
-        ); // 이미지 API로 요청
+        );
+
         if (!response.ok) {
           setError(true);
-          return;
+          setIsLoading(false);
+          return null;
         }
 
         const imageBlob = await response.blob();
-        const objectURL = URL.createObjectURL(imageBlob);
-        setImageSrc(objectURL); // imageSrc를 설정한 뒤
-
-        const preloadImage = new Image();
-        preloadImage.src = objectURL; // 여기서 objectURL을 사용
-        preloadImage.onload = () => setIsLoading(false);
-        preloadImage.onerror = () => {
-          setError(true);
-          setIsLoading(false);
-        };
+        return URL.createObjectURL(imageBlob);
       } catch (err) {
         console.error("Error while fetching image:", err);
         setError(true);
-      } finally {
         setIsLoading(false);
+        return null;
       }
     };
 
-    if (!src.startsWith("http://") && !src.startsWith("https://")) {
-      fetchImage();
-    } else {
-      setImageSrc(src);
-    }
+    // 메인 로직
+    const loadImage = async () => {
+      // 최적화 여부에 따른 분기
+      if (unOptimizeExternalImage) {
+        handleImagePreloading(src);
+      } else {
+        const optimizedImageSrc = await fetchOptimizedImage();
+        if (optimizedImageSrc) {
+          handleImagePreloading(optimizedImageSrc);
+        }
+      }
+    };
+
+    loadImage();
 
     return () => {
-      if (imageSrc) {
+      if (
+        imageSrc &&
+        ((!unOptimizeExternalImage &&
+          !imageSrc.startsWith("http") &&
+          !imageSrc.startsWith("https")) ||
+          (unOptimizeExternalImage &&
+            !imageSrc.startsWith("http") &&
+            !imageSrc.startsWith("https")))
+      ) {
         URL.revokeObjectURL(imageSrc);
       }
     };
-  }, [src, width, height, quality]);
+  }, [src, width, height, quality, unOptimizeExternalImage]);
 
   if (error) {
     return (
@@ -95,8 +124,8 @@ export const CustomImage: React.FC<CustomImageProps> = ({
         style={{
           backgroundImage: `url(${blurDataURL})`,
           backgroundSize: "cover",
-          width: '100%',
-          height: '100%'
+          width: "100%",
+          height: "100%",
         }}
       />
     );
