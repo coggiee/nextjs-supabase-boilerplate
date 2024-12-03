@@ -26,7 +26,7 @@ export const CustomImage: React.FC<CustomImageProps> = ({
   loading = "lazy",
   priority = false,
   placeholder = "empty",
-  blurDataURL = "",
+  blurDataURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO0OgMAAUYBCAZFUJ4AAAAASUVORK5CYII=",
 }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -69,7 +69,11 @@ export const CustomImage: React.FC<CustomImageProps> = ({
       }
     };
 
-    fetchImage();
+    if (!src.startsWith("http://") && !src.startsWith("https://")) {
+      fetchImage();
+    } else {
+      setImageSrc(src);
+    }
 
     return () => {
       if (imageSrc) {
@@ -91,8 +95,8 @@ export const CustomImage: React.FC<CustomImageProps> = ({
         style={{
           backgroundImage: `url(${blurDataURL})`,
           backgroundSize: "cover",
-          width,
-          height,
+          width: '100%',
+          height: '100%'
         }}
       />
     );
