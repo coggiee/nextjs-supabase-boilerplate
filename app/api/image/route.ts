@@ -31,7 +31,7 @@ const downloadAndProcessImage = async (
   const imageBuffer = Buffer.from(buffer); // Buffer로 변환
 
   return await sharp(imageBuffer)
-    .resize({ width, height, fit: "cover" })
+    .resize({ width, height, fit: "contain" })
     .webp({ quality })
     .toBuffer(); // 파일 시스템에 저장하지 않고, 메모리에서 Buffer로 반환
 };
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
       // 로컬 파일 처리
       const localImagePath = path.join(process.cwd(), "public", rawImagePath); // public 폴더 경로
       imageBuffer = await sharp(localImagePath)
-        .resize({ width, height, fit: "cover" })
+        .resize({ width, height, fit: "contain" })
         .webp({ quality })
         .toBuffer();
     }
