@@ -6,8 +6,8 @@ self.addEventListener("install", () => {
 self.addEventListener("fetch", event => {
   const baseUrl = self.location.origin; // 현재 호스트의 기본 URL 가져오기
   const apiUrl = `${baseUrl}/api/image`; // API URL 생성
-
-  if (event.request.url.startsWith(baseUrl + apiUrl)) {
+  
+  if (event.request.url.startsWith(apiUrl)) {
     event.respondWith(
       caches.open("image-cache").then(cache => {
         return cache.match(event.request).then(cachedResponse => {
