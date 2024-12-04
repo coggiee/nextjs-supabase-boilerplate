@@ -4,7 +4,6 @@ import { auth } from "@/auth";
 
 import UserAvatar from "./auth/user-avatar";
 import LoginButton from "./auth/login-button";
-import ApiTestButton from "./api-test-button";
 
 export default async function Header() {
   const session = await auth();
