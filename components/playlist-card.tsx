@@ -48,6 +48,7 @@ export default function PlaylistCard({ provider }: PlaylistCardProps) {
             width={200}
             height={200}
             className="h-full w-full"
+            unOptimizeExternalImage
           />
         </aside>
         <aside className="flex grow flex-col justify-between">

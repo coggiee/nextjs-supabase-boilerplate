@@ -10,16 +10,12 @@ export default function Page() {
       <Header />
       <section className="flex flex-col gap-8">
         <header className="flex flex-col gap-3">
-          <div className="bg-subbackground flex h-10 w-fit items-center gap-2 rounded-lg px-2 text-white">
-            <div className="bg-stroke h-fit rounded-md p-1 px-2 text-sm">
+          <div className="flex h-10 w-fit items-center gap-2 rounded-lg bg-subbackground px-2 text-white">
+            <div className="h-fit rounded-md bg-stroke p-1 px-2 text-sm">
               전체
             </div>
-            <div className="h-fit rounded-md p-1 px-2 text-sm">
-              스포티파이
-            </div>
-            <div className="h-fit rounded-md p-1 px-2 text-sm">
-              유튜브 뮤직
-            </div>
+            <div className="h-fit rounded-md p-1 px-2 text-sm">스포티파이</div>
+            <div className="h-fit rounded-md p-1 px-2 text-sm">유튜브 뮤직</div>
           </div>
           <SearchBar />
         </header>
