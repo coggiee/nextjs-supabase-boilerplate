@@ -5,7 +5,12 @@ import Spotify from "next-auth/providers/spotify";
 import { cookies } from "next/headers";
 
 export default {
-  providers: [Spotify],
+  providers: [
+    Spotify({
+      clientId: process.env.NEXT_PUBLIC_AUTH_SPOTIFY_ID!,
+      clientSecret: process.env.NEXT_PUBLIC_AUTH_SPOTIFY_SECRET!,
+    }),
+  ],
   callbacks: {
     // JWT를 사용할 경우에만 실행됨 ( session: { strategy: "jwt" } )
     async jwt({ token, profile, account }) {
