@@ -13,7 +13,6 @@ export default async function Header() {
     <nav className="mb-9">
       <header className="flex items-center justify-between py-4 text-white">
         <h1 className="text-4xl font-black">Shared</h1>
-        <LoginButton />
         {session ? (
           <UserAvatar
             image={session?.user?.image as string}
@@ -22,7 +21,6 @@ export default async function Header() {
         ) : (
           <LoginButton />
         )}
-        <ApiTestButton />
       </header>
     </nav>
   );
