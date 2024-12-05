@@ -64,6 +64,8 @@ export const refreshAccessToken = async () => {
 
       const { access_token, refresh_token } = data;
       await setAuthTokenList({ access_token, refresh_token });
+
+      return access_token;
     } catch (error) {
       console.error("Error refreshing access token:", error);
       return null;

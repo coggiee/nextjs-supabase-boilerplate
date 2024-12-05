@@ -4,6 +4,10 @@ import type { NextAuthConfig } from "next-auth";
 import Spotify from "next-auth/providers/spotify";
 import { cookies } from "next/headers";
 
+import { createClient } from "./lib/supabase-client";
+
+const supabase = createClient();
+
 export default {
   providers: [
     Spotify({
@@ -13,9 +17,18 @@ export default {
   ],
   callbacks: {
     // JWT를 사용할 경우에만 실행됨 ( session: { strategy: "jwt" } )
-    async jwt({ token, profile, account }) {
+    async jwt({ token, profile, account, user }) {
       if (profile) {
         token.spotifyId = profile.id;
+        if (profile) {
+          await supabase
+            .from("user")
+            .update({
+              spotify_id: profile.id,
+            })
+            .eq("id", user.id)
+            .single();
+        }
       }
       if (account) {
         const cookieStore = await cookies();
