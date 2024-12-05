@@ -12,12 +12,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        spotify: "#6FFFC3",
+        spotify: "#1ed760",
         youtube: "#FF9DB2",
         stroke: "#3A3A3A",
         subtle: "#A1A1A1",
         mainbackground: "#1A1A1A",
         subbackground: "#202020",
+        subhover: "#282828",
+        subspotify: "#6FFFC3",
         // card: {
         //   DEFAULT: "hsl(var(--card))",
         //   foreground: "hsl(var(--card-foreground))",

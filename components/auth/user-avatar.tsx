@@ -9,7 +9,7 @@ interface UserAvatarProps {
 
 export default function UserAvatar({ image, name }: UserAvatarProps) {
   return (
-    <Avatar>
+    <Avatar className="h-8 w-8">
       <AvatarImage src={image} />
       <AvatarFallback>{name}</AvatarFallback>
     </Avatar>
