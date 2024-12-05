@@ -1,5 +1,5 @@
 import React from "react";
-import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,15 @@ import { CustomImage } from "./custom-image";
 
 interface PlaylistCardProps {
   provider: MusicProvider;
+  name: string;
+  description: string;
+  imageUrl: string;
+  externalUrl: string;
+  owner: string;
+  tagList?: string[];
+  totalCount: number;
+  ownerProfileUrl: string;
+  isLast: boolean;
 }
 
 const providerIcon = {
@@ -20,30 +29,45 @@ const providerIcon = {
 };
 
 const providerStyle = {
+  none: "border-l-0 border-r-0 border-t-0 border-b shadow-none rounded-none border-stroke",
   spotify: "shadow-spotify border-spotify hover:shadow-spotify-hover",
   youtube: "shadow-youtube border-youtube hover:shadow-youtube-hover",
 };
 
-export default function PlaylistCard({ provider }: PlaylistCardProps) {
+export default function PlaylistCard({
+  provider,
+  name,
+  description,
+  imageUrl,
+  externalUrl,
+  owner,
+  tagList,
+  totalCount,
+  ownerProfileUrl,
+  isLast,
+}: PlaylistCardProps) {
   return (
     <Card
       className={cn(
-        "cursor-pointer bg-background transition-shadow duration-300",
+        "bg-background transition-shadow duration-300",
         providerStyle[provider],
+        isLast && "border-none",
       )}
     >
-      <CardHeader className="flex-row items-center justify-between px-4 py-3">
-        <div
-          className={cn("aspect-square h-12 w-12", providerIcon[provider])}
-        />
-        <div className="flex items-center justify-center pb-2">
-          <IconMusic provider={provider} isChecked />
-        </div>
-      </CardHeader>
-      <CardContent className="flex gap-4 px-4 text-white">
-        <aside className="relative aspect-square w-16 overflow-hidden rounded-lg">
+      {provider !== "none" && (
+        <CardHeader className="flex-row items-center justify-between px-4 py-3">
+          <div
+            className={cn("aspect-square h-12 w-12", providerIcon[provider])}
+          />
+          <div className="flex items-center justify-center pb-2">
+            <IconMusic provider={provider} isChecked />
+          </div>
+        </CardHeader>
+      )}
+      <CardContent className="flex gap-4 px-0 text-white">
+        <aside className="relative aspect-square h-[76px] w-[76px] shrink-0 overflow-hidden rounded-lg">
           <CustomImage
-            src={"https://picsum.photos/200"}
+            src={imageUrl}
             alt="playlist-image"
             width={200}
             height={200}
@@ -52,12 +76,19 @@ export default function PlaylistCard({ provider }: PlaylistCardProps) {
           />
         </aside>
         <aside className="flex grow flex-col justify-between">
-          <header className="flex items-center justify-between">
-            <h1 className="text-lg font-semibold">Sample Playlist</h1>
-            <ChevronRight className="text-subtle hover:text-white" />
+          <header className="flex justify-between">
+            <div className="flex flex-col">
+              <Link
+                href={externalUrl}
+                className="text-lg underline-offset-4 hover:underline"
+              >
+                <h1>{name}</h1>
+              </Link>
+              <h2 className="line-clamp-2 text-subtle">{description}</h2>
+            </div>
           </header>
           <footer className="flex gap-2">
-            {["코딩할 때 듣는", "눈물 나는", "잔잔한"].map((tag, index) => (
+            {tagList?.map((tag, index) => (
               <Badge
                 key={index}
                 className="rounded-full border-stroke bg-subbackground"
@@ -68,9 +99,12 @@ export default function PlaylistCard({ provider }: PlaylistCardProps) {
           </footer>
         </aside>
       </CardContent>
-      <CardFooter className="justify-between px-4 pb-3 text-subtle">
-        <h1 className="text-lg font-semibold">+87곡</h1>
-        <h2 className="text-sm">by John doe</h2>
+      <CardFooter className="justify-between px-0 pb-3 text-subtle">
+        <h1 className="text-lg font-semibold">+ {totalCount}곡</h1>
+        <Link href={ownerProfileUrl} className="space-x-1 text-sm">
+          <span>shared by</span>
+          <span className="underline-offset-4 hover:underline">{owner}</span>
+        </Link>
       </CardFooter>
     </Card>
   );

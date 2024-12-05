@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 import "./globals.css";
+import Header from "@/components/header";
+
 import Providers from "./providers";
 
 const pretendard = localFont({
@@ -19,8 +21,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -28,8 +32,10 @@ export default function RootLayout({
         className={`${pretendard.variable} bg-mainbackground font-pretendard antialiased`}
       >
         <Providers>
-          <main className="container mx-auto h-dvh w-full px-6">
+          <main className="container relative mx-auto flex h-dvh w-full flex-col px-6">
+            <Header />
             {children}
+            {modal}
           </main>
         </Providers>
         <script defer src="/service-worker.js" />
