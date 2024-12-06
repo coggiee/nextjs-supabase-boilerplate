@@ -22,7 +22,8 @@ export default function Page() {
             </div>
             <Link
               href="/share"
-              className="hover:bg-subhover rounded-md bg-subbackground p-2 px-4 text-sm font-bold text-white"
+              scroll={false}
+              className="rounded-md bg-subbackground p-2 px-4 text-sm font-bold text-white hover:bg-subhover"
             >
               공유
             </Link>

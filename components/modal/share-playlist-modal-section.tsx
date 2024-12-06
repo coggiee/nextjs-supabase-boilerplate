@@ -31,17 +31,16 @@ export default function SharePlaylistModalSection({
           size="sm"
           className="border border-spotify/80"
           onClick={handleLoadPlaylist}
-          disabled={isRefetching}
+          disabled={isRefetching || isPending}
         >
-          {isRefetching ? "불러오는 중..." : "동기화"}
+          {isRefetching || isPending ? "불러오는 중..." : "동기화"}
         </Button>
       </div>
-      {isPending ||
-        (isRefetching && (
-          <div className="flex h-40 items-center justify-center">
-            <LoaderCircleIcon className="h-8 w-8 animate-spin text-spotify" />
-          </div>
-        ))}
+      {(isPending || isRefetching) && (
+        <div className="flex h-40 items-center justify-center">
+          <LoaderCircleIcon className="h-8 w-8 animate-spin text-spotify" />
+        </div>
+      )}
       {!isPending && !isRefetching && (
         <main className="flex flex-col gap-6 px-4">
           {data?.items.map(
