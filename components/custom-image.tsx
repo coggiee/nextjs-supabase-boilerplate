@@ -137,7 +137,7 @@ export const CustomImage: React.FC<CustomImageProps> = ({
       alt={alt}
       width={width}
       height={height}
-      className={`object-cover ${className}`}
+      className={`${className}`}
       loading={priority ? "eager" : loading}
       style={{
         display: isLoading ? "none" : "block",

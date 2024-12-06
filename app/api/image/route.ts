@@ -64,9 +64,12 @@ export async function GET(request: NextRequest) {
     } else {
       // 로컬 파일 처리
       const localImagePath = path.join(process.cwd(), "public", rawImagePath); // public 폴더 경로
+
       imageBuffer = await sharp(localImagePath)
-        .resize({ width, height, fit: "contain" })
-        .webp({ quality })
+        .resize({ fit: "cover", width: 900})
+        .webp({
+          quality,
+        })
         .toBuffer();
     }
 
